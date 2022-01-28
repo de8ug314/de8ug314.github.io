@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="de8ug's blog">
-  <title>关于我的blog | de8ug's blog</title>
+  <title>pwn：栈溢出(一） | de8ug's blog</title>
   <meta name="author" content="de8ug" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="杂谈" />
+    <meta name="keywords" content="pwn" />
   
-  <meta name="description" content="序言：以前特别讨厌写作，现在想想，应该是受了某些文体的毒害吧。看着题目要求就得想好模板，开头怎么编，中间怎么凑，结尾怎么贴。或许偶尔看见了一些感兴趣，稍微可以有点思考的题目，想要在里面表达点自己的思想看法，便马上就被老师扣帽子，搞批斗。模仿一些优秀作文的写作思路，硬背一些意识形态正确的素材，就为了成为那千篇一律中的一枚。一篇下来，看着自己的文章就好像把什么不可名状之物跟自己大脑一起放在锅里搅作一">
+  <meta name="description" content="基础的pwn虽然大概的知识框架有了些，但是要切实掌握还是需要做题的。这个系列大概就是我一边梳理记录知识点一边做题的过程（并不是入门教程）。主要会参考nightmare上的顺序和题，并且看情况补充。做题大概都是边做边记录（没有那么多绯红之王），所以翻车很正常,不过这样应该更能发现问题吧。题目clone这个就行了https:&#x2F;&#x2F;github.com&#x2F;guyinatuxedo&#x2F;nightmare.git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于我的blog">
-<meta property="og:url" content="http://de8ug.space/2022/01d46252f1.html">
+<meta property="og:title" content="pwn：栈溢出(一）">
+<meta property="og:url" content="http://de8ug.space/2022/01f7a67c81.html">
 <meta property="og:site_name" content="de8ug&#39;s blog">
-<meta property="og:description" content="序言：以前特别讨厌写作，现在想想，应该是受了某些文体的毒害吧。看着题目要求就得想好模板，开头怎么编，中间怎么凑，结尾怎么贴。或许偶尔看见了一些感兴趣，稍微可以有点思考的题目，想要在里面表达点自己的思想看法，便马上就被老师扣帽子，搞批斗。模仿一些优秀作文的写作思路，硬背一些意识形态正确的素材，就为了成为那千篇一律中的一枚。一篇下来，看着自己的文章就好像把什么不可名状之物跟自己大脑一起放在锅里搅作一">
+<meta property="og:description" content="基础的pwn虽然大概的知识框架有了些，但是要切实掌握还是需要做题的。这个系列大概就是我一边梳理记录知识点一边做题的过程（并不是入门教程）。主要会参考nightmare上的顺序和题，并且看情况补充。做题大概都是边做边记录（没有那么多绯红之王），所以翻车很正常,不过这样应该更能发现问题吧。题目clone这个就行了https:&#x2F;&#x2F;github.com&#x2F;guyinatuxedo&#x2F;nightmare.git">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://de8ug.space/de8ug's%20blog">
-<meta property="article:published_time" content="2022-01-26T11:08:50.000Z">
-<meta property="article:modified_time" content="2022-01-27T02:34:21.111Z">
+<meta property="article:published_time" content="2022-01-28T02:50:25.000Z">
+<meta property="article:modified_time" content="2022-01-28T08:39:55.691Z">
 <meta property="article:author" content="de8ug">
-<meta property="article:tag" content="杂谈">
+<meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://de8ug.space/de8ug's%20blog">
 <meta name="twitter:site" content="@de8ug">
@@ -163,17 +163,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">关于我的blog</h1>
+                <h1 class="kratos-entry-title text-center">pwn：栈溢出(一）</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-01-26</li>
+                <li><i class="fa fa-calendar"></i> 2022-01-28</li>
                 <li><i class="fa fa-user"></i> 作者 de8ug</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        1498
+                        ~1.63K
                     
                     字
                 </li>
@@ -182,19 +182,21 @@
         </header>
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                本文最后编辑于 <time datetime="1643250861111"></time> 前，其中的内容可能需要更新。
+                本文最后编辑于 <time datetime="1643359195691"></time> 前，其中的内容可能需要更新。
             </div>
             
                 <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E6%96%87%EF%BC%9A-%E4%B8%80%E6%AE%B5%E5%BA%9F%E8%AF%9D%E7%BB%93%E6%9D%9F%EF%BC%8C%E6%98%AF%E5%90%AC%E4%B8%80%E6%AE%B5%E5%BA%9F%E8%AF%9D%E7%9A%84%E5%BC%80%E5%A7%8B"><span class="toc-number">1.</span> <span class="toc-text">正文：(一段废话结束，是听一段废话的开始)</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#stack-buffer-overflows"><span class="toc-number">1.</span> <span class="toc-text">stack buffer overflows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%BE%E5%BA%8A%E7%94%A8%E8%B5%B7%E6%9D%A5%E7%9C%9F%E7%9A%84%E6%8C%BA%E6%81%BC%E7%81%AB%E7%9A%84%EF%BC%8C%E5%8F%88%E4%BC%A0%E4%B8%8D%E4%BA%86%E5%9B%BE%E7%89%87%E4%BA%86%E3%80%82%E8%BF%99%E5%87%A0%E5%A4%A9%E5%85%88%E5%AD%A6%E5%AD%A6wpf%E5%86%99%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%90%A7"><span class="toc-number">2.</span> <span class="toc-text">图床用起来真的挺恼火的，又传不了图片了。这几天先学学wpf写个工具吧</span></a></li></ol>
                 </div>
             
             <hr />
-            <ul>
-<li>序言：<br>以前特别讨厌写作，现在想想，应该是受了某些文体的毒害吧。看着题目要求就得想好模板，开头怎么编，中间怎么凑，结尾怎么贴。或许偶尔看见了一些感兴趣，稍微可以有点思考的题目，想要在里面表达点自己的思想看法，便马上就被老师扣帽子，搞批斗。模仿一些优秀作文的写作思路，硬背一些意识形态正确的素材，就为了成为那千篇一律中的一枚。一篇下来，看着自己的文章就好像把什么不可名状之物跟自己大脑一起放在锅里搅作一团的烂汤一样，而自己却只能λ (хдх) (´＊｀) (≧m≦) (＾～＾)。我是很羡慕那些作文下来次次优秀以上的同学的，想必越王尝的胆都没有他们喝的这些汤苦(仅代表我这个语文渣的看法，可能也会有些人乐在其中？)  （划清界线：依据规定，上文中出现的所有主角都不是高考作文)<img src="https://gitee.com/rewriter/de8ug/raw/master/20220126205932.png"><br>要说为什么现在会开始写起博客呢。我想主要是因为进了网络安全这个门吧。虽然说安全圈因为某些不可抗因素有种大家各自扎堆探险，圈地自萌的感觉，也有很多博流量四处借鉴的文章，但是，仍然可以看到有些文章记录了踩过的坑，遇过的难（突然发现我好像有点不用对偶不会讲谓语的习惯，这大概是xx后遗症吧，今后改正）；有讲学习心得，方法论的；甚至有将自己的学习体系都分享的。每次看都这些人在真真假假赛博世界真心耕耘的身影，我都会莫名的感叹，甚至感动。在这之后，我每次捧起书都能体会到什么叫人类智慧的结晶（抄袭除外）。</li>
-</ul>
-<h1 id="正文：-一段废话结束，是听一段废话的开始"><a href="#正文：-一段废话结束，是听一段废话的开始" class="headerlink" title="正文：(一段废话结束，是听一段废话的开始)"></a>正文：(一段废话结束，是听一段废话的开始)</h1><p>因此，我决定在自己网上冲浪时也向大海挥洒自己的汗水。我敬佩所有追求知识和真理的人，如果我的博客或多或少能帮到你，也算是一种自我价值的实现吧。<br>当你看到我的博客网站时，或许这里的文章还草草无几，或许已经水了不少了，或许因为遭到现实的毒打，碰碎了鼻子摔脏了尻而久久不更，或许还正满怀希望走在追梦的路上，但对我来说或许不只是单单的一些字，更是成长。现在的我想到这里就很奇妙，未来的我看到这篇幼稚的开篇演讲会想什么呢，，他经历了什么呢？又是否还记得现在的我在想什么呢。<br>不出意外的话，我的博客内容应该是五花八门的。好像在高考失利后打开了什么枷锁一样，现在的我对感兴趣的东西就想学，想做的事情就想去完成。当然也并不是打雨露均沾剑法的，哈哈。然后大概会是一些笔记（不是很想用笔记的东西）被放在这里，一些知识自己的理解，但不完全是理论，所以可能并不完全严谨，不过有什么错误还请大家联系指正，然后就是像这篇文章一样的随手乱写。<br>我没有什么文笔，也对自己玩的烂梗，憋的冷笑话能否博君一乐没有什么自信。如果看不惯我的行文，还请不要随地吐痰了。读书时我属于那种不想给没有任何追求的同学<br>抄作业的类型，不过为了避免塑造成一个正经老实的好学生（表面上）的形象，我还是会不情愿的把作业递过去，偷偷地投以鄙夷的眼神。但是相反的，虽然我不善于组织言语，表达情感，但我却想尽全力的将自己所理解的知识分享给那些真心请教的同学。同时，我也会巴不得舔着别人脚似地向别人请教。<br>此外，博客主要是知识技术类的，偶尔的私货和杂谈仅代表个人观点，原则上没有政治话题，想谈也不懂啊，我也不想当<a target="_blank" rel="noopener" href="https://zh.moegirl.org.cn/%E5%AE%AB%E4%BB%A3%E6%8B%93%E7%95%99">情强哥</a>，网络世界懂得都懂，不懂就算了，如果不小心扯到两句，还请不要顺着网线来打我。<br>写博客的目的大概就是起因了，想要分享知识，创造一个自己思想的いい場所。或许大家就是百度某个问题恰好我也踩过雷了，我的文章能帮助大家节省点时间少走点弯路，我也就满足了。如果没人看我会没有继续的动力吗，应该不会，我想写博客对自己本身就是很大的提升，然后，实在不行，发正我也没弄什么计数功能，自我催眠应该也挺容易的。如果还能结交到几个真正志同道合的朋友，那也是三生有幸了。<br><img src="https://gitee.com/rewriter/de8ug/raw/master/Makise.Kurisu.full.643580.jpg"></p>
-
+            <p>基础的pwn虽然大概的知识框架有了些，但是要切实掌握还是需要做题的。这个系列大概就是我一边梳理记录知识点一边做题的过程（并不是入门教程）。主要会参考<a target="_blank" rel="noopener" href="https://guyinatuxedo.github.io/index.html">nightmare上的顺序和题</a>，并且看情况补充。做题大概都是边做边记录（没有那么多绯红之王），所以翻车很正常,不过这样应该更能发现问题吧。题目clone这个就行了<a target="_blank" rel="noopener" href="https://github.com/guyinatuxedo/nightmare.git"><em>https://github.com/guyinatuxedo/nightmare.git</em></a><br><img src="https://gitee.com/rewriter/de8ug/raw/master/202201281310561.png"></p>
+<h1 id="stack-buffer-overflows"><a href="#stack-buffer-overflows" class="headerlink" title="stack buffer overflows"></a>stack buffer overflows</h1><p>首先进入04-bof_variable看看里面的tamu19_pwn1。这里文件给的算是一条龙了，exp和readme结合起来可以直接进行学习。<img src="https://gitee.com/rewriter/de8ug/raw/master/202201281320567.png"><br>话不多说，直接gdb打开后checksec（查看程序有哪些保护）先。<img src="https://gitee.com/rewriter/de8ug/raw/master/202201281321988.png"><br>至于这些保护有什么作用，以后再细🔒。<br>r运行看看效果<br><img src="https://gitee.com/rewriter/de8ug/raw/master/202201281328951.png"><br>什么典故不太懂，总之是要输入点东西嘛<img src="https://gitee.com/rewriter/de8ug/raw/master/202201281330306.png"><br>流程大概就是这样具体，可以拖到ida里去分析了。看看main函数说了些啥，先F5大法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setvbuf(<span class="built_in">stdout</span>, &amp;dword_0 + <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>这个setvbuf有什么用呢，直接man手册man setvbuf（可能会出现没有该内容的错误，这是因为手册不全导致的，百度法修复即可）<br><img src="https://gitee.com/rewriter/de8ug/raw/master/202201281443491.png"><br>文档意思就是将stream写到buf里，mode就是使用的模式，size就是设置缓冲区的大小。题目就是将stdout的缓冲区设置到&amp;dword_0+2(至于指向的哪里也不太需要知道),但是大小为0。其实也就是让stdout不经过缓冲区。很多题目都有类似操作，应该是为了避免些写到缓冲区会发生的意料之外的错误吧。<br>下面的代码就比较简单直接，就是几次用strcmp比较给出的字符和输入的字符。故事情节就是拉斯洛特来要圣杯（大概是亚瑟王传说里找圣杯的故事？记不太清了），然后明显的gets溢出触及对方的密码，让v5等于某值就可以执行print_flag了。<br>这里就可以简单理解下什么叫栈溢出了（如果还不知道函数调用与栈的关系的话，可以看看隔壁的程序员的自我修养系列，虽然这个时候还没写到这来），个人比较喜欢地址从低到高想象栈，这样对溢出比较好理解。<img src="https://gitee.com/rewriter/de8ug/raw/master/202201281549157.png"><br>假设有这样一个简单的程序，欠的钱当然是程序本身就储存好的，不会让你修改，但是它要让告诉还想借多少，这个让我们输入数据的机会就给了我们可乘之机。假设对面是个大资本家，为了赚到你的利润多少钱都给的出手，那加入我们输入* 9999000000000000就会变成<img src="https://gitee.com/rewriter/de8ug/raw/master/202201281556702.png"><br>由于栈是先入后出，这里A的使用是在B使用后的，所以B的地址会在A的上面，当我们输入16个零时就能把A的9999覆盖成0000。这样就达成了我们不仅规避了高利贷的悲惨人生，还能在这随便拿钱。<br>栈溢出基本原理就这个意思，根据程序的功能，函数执行的过程，溢出的地址和长度等等因素就产生了以后的种种花样。<br>接下来就回到我们的题当中，这下就佷明了了，找到s和v5的地址不就完了嘛，gets就是个资本家，不限制输入长度，那就往里乱塞就行了。地址怎么找呢，我们在ida中把这个设置打开<img src="https://gitee.com/rewriter/de8ug/raw/master/202201281604176.png">再点回ida view就可以看到对应的代码的地方了，为了方便，我们在软件上方Option-&gt;General勾选图中选项便可<img src="https://gitee.com/rewriter/de8ug/raw/master/202201281607973.png"><br>这样我们看到了地址，回到gdb下断点。我这里ida给出的代码段地址不能用，于是算便宜找地址（先在刚才设置那个地方勾选Function offset）<br>看到这里的汇编指令</p>
+<p><code>main+139  cmp     [ebp+var_10], 0DEA110C8h</code><br>然后gdb理输入start看到</p>
+<p><code>0x56555788 &lt;main+15&gt;    sub    esp, 0x40</code><br>这样我们要断点的地址就为0x56555788+0x139-0x15(都是16进制下的)<br><img src="https://gitee.com/rewriter/de8ug/raw/master/202201281621202.png"><br>可以在ida下面直接输入得到计算结果，这样断点后根据c伪代码进行相关输入</p>
+<h1 id="图床用起来真的挺恼火的，又传不了图片了。这几天先学学wpf写个工具吧"><a href="#图床用起来真的挺恼火的，又传不了图片了。这几天先学学wpf写个工具吧" class="headerlink" title="图床用起来真的挺恼火的，又传不了图片了。这几天先学学wpf写个工具吧"></a>图床用起来真的挺恼火的，又传不了图片了。这几天先学学wpf写个工具吧</h1>
         </div>
         
             <div class="kratos-copyright text-center clearfix">
@@ -247,7 +249,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://de8ug.space/2022/01d46252f1.html",
+                text: "http://de8ug.space/2022/01f7a67c81.html",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -259,10 +261,9 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://de8ug.space/2022/01d46252f1.html";
-            const title         = "「关于我的blog」";
-            const excerpt       = `
-序言：以前特别讨厌写作，现在想想，应该是受了某些文体的毒害吧。看着题目要求就得想好模板，开头怎么编，中间怎么凑，结尾怎么贴。或许偶尔看见了一些感兴趣，稍微可以有点思考的题目，想要在里面表达点自己的思想看法，便马上就被老师扣帽子，搞批...`;
+            const hostUrl       = "http://de8ug.space/2022/01f7a67c81.html";
+            const title         = "「pwn：栈溢出(一）」";
+            const excerpt       = `基础的pwn虽然大概的知识框架有了些，但是要切实掌握还是需要做题的。这个系列大概就是我一边梳理记录知识点一边做题的过程（并不是入门教程）。主要会参考nightmare上的顺序和题，并且看情况补充。做题大概都是边做边记录（没有那么多绯红...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -281,10 +282,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a>
+                    <a class="tag-none-link" href="/tags/pwn/" rel="tag">pwn</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-01-27</span>
+                <span>最后编辑：2022-01-28</span>
                 </div>
             </div>
         </footer>
@@ -293,13 +294,9 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" makise-kurise" href="/2010/08b8ef5cec.html">&lt; 上一篇</a>
+                <a title=" 《程序员的自我修养》第一章" href="/2022/01f7bb4902.html">&lt; 上一篇</a>
             </div>
             
-            
-            <div class="nav-next clearfix">
-                <a title=" 《程序员的自我修养》第一章" href="/2022/01f7bb4902.html">下一篇 &gt;</a>
-            </div>
             
         </nav>
     
@@ -341,7 +338,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E6%96%87%EF%BC%9A-%E4%B8%80%E6%AE%B5%E5%BA%9F%E8%AF%9D%E7%BB%93%E6%9D%9F%EF%BC%8C%E6%98%AF%E5%90%AC%E4%B8%80%E6%AE%B5%E5%BA%9F%E8%AF%9D%E7%9A%84%E5%BC%80%E5%A7%8B"><span class="toc-text">正文：(一段废话结束，是听一段废话的开始)</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#stack-buffer-overflows"><span class="toc-text">stack buffer overflows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%BE%E5%BA%8A%E7%94%A8%E8%B5%B7%E6%9D%A5%E7%9C%9F%E7%9A%84%E6%8C%BA%E6%81%BC%E7%81%AB%E7%9A%84%EF%BC%8C%E5%8F%88%E4%BC%A0%E4%B8%8D%E4%BA%86%E5%9B%BE%E7%89%87%E4%BA%86%E3%80%82%E8%BF%99%E5%87%A0%E5%A4%A9%E5%85%88%E5%AD%A6%E5%AD%A6wpf%E5%86%99%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%90%A7"><span class="toc-text">图床用起来真的挺恼火的，又传不了图片了。这几天先学学wpf写个工具吧</span></a></li></ol>
     </div>
 </aside>
                 
