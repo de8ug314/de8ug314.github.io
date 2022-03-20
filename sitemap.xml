@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://de8ug.space/2022/01f7a67c81.html</loc>
+    <loc>http://de8ug.space/2022/03aefc80db.html</loc>
     
-    <lastmod>2022-01-28</lastmod>
+    <lastmod>2022-03-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://de8ug.space/2022/01f7bb4902.html</loc>
+    <loc>http://de8ug.space/2010/08b8ef5cec.html</loc>
     
-    <lastmod>2022-01-28</lastmod>
+    <lastmod>2022-03-08</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -28,50 +28,25 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>http://de8ug.space/2022/01d46252f1.html</loc>
-    
-    <lastmod>2022-01-27</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://de8ug.space/2010/08b8ef5cec.html</loc>
-    
-    <lastmod>2022-01-27</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   <url>
     <loc>http://de8ug.space/</loc>
-    <lastmod>2022-01-28</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://de8ug.space/tags/binary/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://de8ug.space/tags/pwn/</loc>
-    <lastmod>2022-01-28</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://de8ug.space/tags/%E6%9D%82%E8%B0%88/</loc>
-    <lastmod>2022-01-28</lastmod>
+    <loc>http://de8ug.space/tags/wp/</loc>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -80,21 +55,7 @@
   
   <url>
     <loc>http://de8ug.space/categories/pwn/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://de8ug.space/categories/%E6%9D%82%E8%B0%88/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://de8ug.space/categories/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/</loc>
-    <lastmod>2022-01-28</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
