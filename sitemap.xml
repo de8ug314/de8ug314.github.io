@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://de8ug.space/2022/047e1db425.html</loc>
+    
+    <lastmod>2022-04-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://de8ug.space/2022/03aefc80db.html</loc>
     
     <lastmod>2022-03-20</lastmod>
@@ -31,7 +40,7 @@
 
   <url>
     <loc>http://de8ug.space/</loc>
-    <lastmod>2022-03-20</lastmod>
+    <lastmod>2022-04-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -39,14 +48,14 @@
   
   <url>
     <loc>http://de8ug.space/tags/pwn/</loc>
-    <lastmod>2022-03-20</lastmod>
+    <lastmod>2022-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://de8ug.space/tags/wp/</loc>
-    <lastmod>2022-03-20</lastmod>
+    <lastmod>2022-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -55,7 +64,7 @@
   
   <url>
     <loc>http://de8ug.space/categories/pwn/</loc>
-    <lastmod>2022-03-20</lastmod>
+    <lastmod>2022-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
