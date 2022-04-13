@@ -24,7 +24,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://de8ug.space/de8ug's%20blog">
 <meta property="article:published_time" content="2022-04-13T06:36:37.000Z">
-<meta property="article:modified_time" content="2022-04-13T08:11:13.505Z">
+<meta property="article:modified_time" content="2022-04-13T08:15:46.788Z">
 <meta property="article:author" content="de8ug">
 <meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
@@ -182,7 +182,7 @@
         </header>
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                本文最后编辑于 <time datetime="1649837473505"></time> 前，其中的内容可能需要更新。
+                本文最后编辑于 <time datetime="1649837746788"></time> 前，其中的内容可能需要更新。
             </div>
             
             <hr />
@@ -190,7 +190,7 @@
 <p>1.gdb.attach的方式:</p>
 <p>用这个方式来断点的缺点是不好断到main函数，因为使用process()申请进程后可能马上就会进入到main函数内。</p>
 <p>正常情况下使用方式如下：</p>
-<p><img src="https://gitee.com/rewriter/de8ug/raw/master/202204131452669.png" alt="image-20220413145226631"></p>
+<p><img src="https://s2.loli.net/2022/04/13/nl15zViqIKCrSbE.png" alt="image-20220413161540619"></p>
 <p>在发送数据之前使用gdb.attach来执行断点命令(这里的debug和sdl分别是我的<a target="_blank" rel="noopener" href="https://github.com/de8ug314/pwnstarter">项目</a>，一个exp的模板对gdb.attach和sendline的封装)，然后pause。使用场景一般是我们想查看发送的数据对内存的影响，如果不加pause的话一般会断在read函数的某处。</p>
 <p><img src="https://s2.loli.net/2022/04/13/4AjzpndhmBe5Plg.png" alt="image-20220413153828845"></p>
 <p>运行exp会弹出上图右方的gdb终端，然后在左边的终端按任意键，看到自己要发送的内存发送过后，接着在右边终端输入c（继续）的命令，便能够正常断点</p>
